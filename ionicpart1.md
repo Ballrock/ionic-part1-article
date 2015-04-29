@@ -2,7 +2,7 @@
 ### I. Ionic késako ?
 <img src="./img/logo_ionic.png" width="200"/>
 
-Ionic est un framework développé par l'entreprise [Drifty](http://drifty.com/). Il est d'ailleurs interressant de noter qu'une grande partie de leurs membres participe également activement au developpement d'Angular Material que je vous exposerais surement dans un prochain article. Ionic est orienté vers la création d'application mobile en HTML5, JS et CSS. Son but premier est de facilité le travail de création d'Interface et ainsi, il permet d'arriver très facilement à un rendu dit "natif" pour votre application.
+Ionic est un framework développé par l'entreprise [Drifty](http://drifty.com/). Il est d'ailleurs interressant de noter qu'une grande partie de leurs membres participe également activement au developpement d'Angular Material que je vous exposerais surement dans un prochain article. **Ionic est orienté vers la création d'application mobile en HTML5, JS et CSS.** Son but premier est de facilité le travail de création d'Interface et ainsi, il permet d'arriver très facilement à un rendu dit "natif" pour votre application.
 
 Ce framework utilise également Angular pour la gestion des interactions dans l'application. Il est bien sur possible d'utiliser uniquement le CSS de Ionic cependant vous perdez dans ce cas là l'interet de plusieurs composants.
 
@@ -31,18 +31,28 @@ npm install -g cordova ionic
 That's all folk !
 
 ##### Les SDK
-Nous arrivons ici dans la seule et unique difficultée de ces installations, l'installation des SDK des platformes. Ces SDK permettent seulement le build de vos applications sous forme de package pour l'exécution sur le téléphone cible.
-Il est donc toujours possible de commencer le développement sans celles-ci, cependant réaliser tout le developpement d'une application uniquement via la visualisation "Desktop" est quelque chose d'hasardeux. En effet les plugins Cordova d'appels aux ressources du téléphone (Caméra, Network, Acceleromètre) ne sont pas chargé lors de cette visualisation. De plus il est, à mon sens, important de tester les performances de votre application et la fluidité de votre interface tout au long des phases de developpement.
+Nous arrivons ici dans la seule et unique difficultée de ces installations, l'installation des SDK des platformes. Ces SDK permettent le build de vos applications sous forme de package pour l'exécution sur le téléphone cible.
+
+Il est toujours possible de commencer le développement sans celles-ci, cependant réaliser tout le developpement d'une application uniquement via la visualisation "Desktop" est quelque chose d'hasardeux. En effet les plugins Cordova d'appels aux ressources du téléphone (Caméra, Network, Acceleromètre) ne sont pas chargés lors de cette visualisation. De plus il est, à mon sens, important de tester les performances de votre application et la fluidité de votre interface tout au long des phases de developpement.
 
 ###### Android
 Le SDK Android est disponible directement sur le site officiel [Android](http://developer.android.com/sdk/installing/index.html)
 
-*Note - Inutile d'installer toute la panoplie Android Studio dans notre cas, cependant je vous la recommande pour du développement d'application native Android*
+*Note - Inutile d'installer toute la panoplie Android Studio dans notre cas. Cependant je vous la recommande pour du développement d'application native Android*
 
 Une fois le SDK installé, si ce n'est pas le cas, il est necessaire que tools et plateform-tools soit présent dans votre PATH.
 
+*En cas de soucis je vous conseille de consulter la [documentation Cordova Android](http://cordova.apache.org/docs/en/edge/guide_platforms_android_index.md.html#Android%20Platform%20Guide)*
+
 ###### iOS
-###### WP8
+
+N'ayant pas réalisé à l'heure actuelle d'installation pour iOS, je vous redirige directement vers la [documentation Cordova iOS](http://cordova.apache.org/docs/en/edge/guide_platforms_ios_index.md.html#iOS%20Platform%20Guide)
+
+###### WP8, Blackberry, Amazon Fire OS, Firefox OS, ...
+
+Cordova possède des compatibilités pour de multiple OS qui sont, par transition, également compatible avec Ionic.
+
+Une liste plus exhaustive est disponible sur [cette page](https://cordova.apache.org/docs/en/edge/guide_support_index.md.html)
 
 #### II.b. Initialisation d'un projet
 
@@ -78,15 +88,16 @@ icysoft
   │   └───org.apache.cordova.device
   ├───scss
   └───www
-
-
 ```
 
-- **Dossier hooks** : Contient les scripts de "hooks" qui permettent à un moment donné du lifecycle d'executer des taches. Par exemple, rajouter un script dans le dossier after_prepare permettra d'exécuter le dit script après le stade "prepare".
+- **Dossier hooks/** : Contient les scripts de "hooks" qui permettent à un moment donné du lifecycle d'executer des taches. Par exemple, rajouter un script dans le dossier after_prepare permettra d'exécuter le dit script après le stade "prepare".
 - **Dossier platform** : Contient les données de chaque plateform (iOS, Android, WP8, ...)
-- **Dossier plugins** : Contient les plugins cordova. Toutes utilisation d'éléments "avancés" des téléphones sortant du domaine Web (Caméra, Giroscope, Splashscreen) passent par un plugin cordova. En somme, les plugins permettent de faire le lien avec les fonctions natives et le javascript de votre application.
-- **Dossier scss** : Contient les scripts Sass (notamment Ionic).
-- **Dossier www** : Contient votre application.
+- **Dossier plugins/** : Contient les plugins cordova. Toutes utilisation d'éléments "avancés" des téléphones sortant du domaine Web (Caméra, Giroscope, Splashscreen) passent par un plugin cordova. En somme, les plugins permettent de faire le lien avec les fonctions natives et le javascript de votre application. Ici trois plugins sont definis de base :
+  - *com.ionic.keyboard* : Plugins Cordova créé par Ionic permettant une gestion plus fine de l'affichage du clavier virtuel sur le téléphone - [GitHub](https://github.com/driftyco/ionic-plugin-keyboard)
+  - *org.apache.cordova.console* : Plugins de gestion de la console et principalement des console.log() pour les OS Mobile, ce plugin est généralement retiré au moment du build de release.
+  - *org.apache.cordova.device* : Plugins permettant la gestion des informations du téléphone (Version Cordova, Modele, Platform...) - [plugins.cordova.io](http://plugins.cordova.io/#/package/org.apache.cordova.device)
+- **Dossier scss/** : Contient les scripts Sass (notamment Ionic).
+- **Dossier www/** : Contient votre application.
 
 Notre projet est prêt pour les modification à present
 
@@ -122,9 +133,14 @@ www
   │   └───ionic
   └───index.html
 ```
-*index.html* est le point d'entrée dans notre application il regroupe tous les imports et l'initialisation de la structure Ionic. Je conseille de garder ce fichier le plus simple possible et de gerer tous le reste sous forme de template et de route angular. Et oui ! Comme je l'ai dit plus haut, nous allons utiliser angular pour joliment wrapper les plugins cordova) pour le developpement de notre application (on peut même inclure [ng-Cordova](http://ngcordova.com/).
+- **Fichier index.html** : C'est le point d'entrée dans notre application il regroupe tous les imports et l'initialisation de la structure Ionic. Je conseille de garder ce fichier le plus simple possible et de gerer tout le reste sous forme de template et de route angular.
+- **Fichier app.js** : Ce fichier contient les premier modules angular
+- **Dossier css/ et img/** : Pas trop besoin d'un dessin ici, ces dossiers nous permettrons de stocker les feuilles de styles css et les images.
+- **Dossier lib/** : De base Bower est paramétré pour envoyer les nouvelles librairies Javascript ici
 
-Bien ! Demarrons à présent, comme je l'indiquais à l'instant nous allons utiliser un systeme de template commençons par rajouter un nouveau dossier qui contiendra nos templates et deux fichier qui contiendra notre header qui sera interactif et notre page de base :
+Comme je l'ai dit plus haut, nous allons effectivement utiliser angular pour le developpement de notre application (on peut même inclure [ng-Cordova](http://ngcordova.com/) pour joliment wrapper les plugins cordova).
+
+Bien ! Démarrons à présent, comme je l'indiquais à l'instant nous allons utiliser un systeme de template commençons par rajouter un nouveau dossier qui contiendra nos templates et deux fichier qui contiendra notre header qui sera interactif et notre page de base :
 
 ```bash
 www
