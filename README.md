@@ -169,6 +169,7 @@ Le fichier base.html est assez simple il comporte la description des tabs de l'a
   </ion-tab>
 </ion-tabs>
 ```
+TODO - Différentes classes utilisées
 
 Le fichier accueil.html est le contenu de notre page, pour l'exemple j'ai pris un élément Ionic de type [Card Showcase](http://ionicframework.com/docs/components/#card-showcase) mais il est tout à fait possible de faire à votre guise.
 
@@ -192,7 +193,25 @@ Vous remarquerez que j'ai ajouté la mention 'use strict' elle n'est pas présen
 
 #### III.b. Modifications
 
-Maintenant attaquons les modifications de app.js et index.js. d'une manière générale j'ai renommé les différents controllers/modules du starter blank pour que cela colle un peu mieux avec notre micro-projet.
+Maintenant attaquons les modifications de app.js et index.js. D'une manière générale j'ai renommé les différents controllers/modules du starter blank pour que cela colle un peu mieux avec notre micro-projet.
+
+Modifions le fichier index.html afin qu'il devienne plus générique et puisse accueillir notre nouveau systeme de template. On importe également le fichier controller.js afin que celui-ci puisse etre appelé dans notre module.
+
+```html
+<script src="js/controller.js"></script>
+
+...
+
+<body ng-app="icysoft">
+  <ion-nav-bar class="bar bar-header has-tabs-top bar-positive">
+  </ion-nav-bar>
+
+  <ion-nav-view></ion-nav-view>
+</body>
+
+```
+La balise *ion-nav-bar* servira comme son nom l'indique à afficher la bar de navigation contenant le titre en haut. Tandis que de son coté la balise *ion-nav-view* va nous permettre d'encapsuler du contenu.
+TODO - Différentes classes utilisées
 
 #### III.c. Tests Web
 
