@@ -16,7 +16,8 @@ Tout d'abord si ce n'est pas déjà fait, je vous propose d'installer [NodeJS](h
 
 NPM (Gestionnaire de paquet de NodeJS et Javascript en général), qui est inclut avec NodeJS, nous permettra de récupérer la plupart des outils nécessaires pour le développement de notre application. L'essayer c'est l'adopter ;)
 
-*Note - Si vous êtes derrière un proxy il est important de configurer votre npm pour le prendre en compte :*
+*Note - Si vous êtes derrière un proxy il est important de configurer votre npm pour le prendre en compte. Le plus simple pour faire cela est via les variables d'envirronement HTTP_PROXY et HTTPS_PROXY. Cependant il est malgré tout possible de configurer un proxy uniquement pour npm via les commandes suivantes :*
+
 ```bash
 npm config set proxy  http://user_name:password@proxy.company.com:8080
 npm config set https-proxy http://user_name:password@proxy.company.com:8080
@@ -103,7 +104,7 @@ Notre projet est prêt pour les modifications à present
 
 ### III. Commençons notre application
 
-##### Note : Les source de cet article sont disponibles sur le repo github suivant
+**Note : Les source de cet article sont disponibles sur [GitHub]()**
 
 Le dossier www contiendra tous les éléments de notre application.
 
@@ -140,18 +141,61 @@ www
 
 Comme je l'ai dit plus haut, nous allons effectivement utiliser angular pour le développement de notre application (on peut même inclure [ng-Cordova](http://ngcordova.com/) pour joliment wrapper les plugins Cordova).
 
-Comme je l'indiquais à l'instant nous allons utiliser un système de template commençons par rajouter un nouveau dossier qui contiendra nos templates et deux fichier qui contiendra notre header qui sera interactif et notre page de base :
+#### III.a. Création de nouveaux fichiers
+
+Comme je l'indiquais à l'instant nous allons utiliser un système de template commençons par rajouter un nouveau dossier qui contiendra nos templates et dans notre cas, plus précisément, deux fichiers base.html (le wrapper) et icysoft.html (page de présentation). Dans un second temps nous creerons un fichier controller.js qui contientra comme son nom l'indique notre controller AngularJS :
 
 ```bash
 www
   ├───css
   ├───img
   ├───js
-  │   └───app.js
+  │   │───app.js
+  │   └───controller.js
   ├───lib
-  │   └───ionic
   ├───tpl
-  │   │───header.hml
-  │   └───base.hml
+  │   │───accueil.html
+  │   └───base.html
   └───index.html
 ```
+
+Le fichier base.html est assez simple il comporte la description des tabs de l'application et que les pages/liens associées. Il sert en gros à wrapper le contenu de toute les pages leur ajouter un header/footer. Vous retrouverez ce genre de fonctionnement dans les starter tabs.
+
+```html
+<ion-tabs class="tabs-striped tabs-background-positive tabs-color-light">
+  <!-- Tab Accueil -->
+  <ion-tab title="Icysoft" icon-off="ion-ios-snowy" icon-on="ion-ios-snowy" href="#/icysoft/accueil">
+    <ion-nav-view name="accueil"></ion-nav-view>
+  </ion-tab>
+</ion-tabs>
+```
+
+Le fichier accueil.html est le contenu de notre page, pour l'exemple j'ai pris un élément Ionic de type [Card Showcase](http://ionicframework.com/docs/components/#card-showcase) mais il est tout à fait possible de faire à votre guise.
+
+```html
+<ion-view view-title="Icysoft">
+  <ion-content class="padding">
+  ...
+  </ion-content>
+</ion-view>
+```
+Le fichier controller.js contient uniquement le controller de la page accueil.html, donc nous n'aurons effectivement pas grand chose ;).
+
+```javascript
+'use strict';
+
+angular.module('controller', [])
+.controller('AccueilCtrl', function($scope) {});
+```
+
+Vous remarquerez que j'ai ajouté la mention 'use strict' elle n'est pas présente de base dans les fichiers des starter Ionic.
+
+#### III.b. Modifications
+
+Maintenant attaquons les modifications de app.js et index.js. d'une manière générale j'ai renommé les différents controllers/modules du starter blank pour que cela colle un peu mieux avec notre micro-projet.
+
+#### III.c. Tests Web
+
+#### III.d. Tests mobile (Android)
+
+### IV. Préparons la publication (Android)

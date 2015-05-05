@@ -1,9 +1,11 @@
+'use strict';
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('icysoft', ['ionic','controller'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -17,3 +19,24 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+  .state('base',
+  {
+    url:'/icysoft',
+    abstract: true,
+    templateUrl: 'tpl/base.html'
+  })
+  .state('base.icysoft',
+  {
+    url: '/accueil',
+    views: {
+      'accueil': {
+        templateUrl: 'tpl/accueil.html',
+        controller: 'AccueilCtrl'
+      }
+    }
+  });
+  $urlRouterProvider.otherwise('/icysoft/accueil');
+});
