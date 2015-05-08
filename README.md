@@ -141,7 +141,8 @@ www
 
 Comme je l'ai dit plus haut, nous allons effectivement utiliser angular pour le développement de notre application (on peut même inclure [ng-Cordova](http://ngcordova.com/) pour joliment wrapper les plugins Cordova).
 
-#### III.a. Création de nouveaux fichiers
+#### III.a. Mise en place de la base
+##### Créations
 
 Comme je l'indiquais à l'instant nous allons utiliser un système de template commençons par rajouter un nouveau dossier qui contiendra nos templates et dans notre cas, plus précisément, deux fichiers base.html (le wrapper) et icysoft.html (page de présentation). Dans un second temps nous creerons un fichier controller.js qui contientra comme son nom l'indique notre controller AngularJS :
 
@@ -162,20 +163,24 @@ www
 Le fichier base.html est assez simple il comporte la description des tabs de l'application et que les pages/liens associées. Il sert en gros à wrapper le contenu de toute les pages leur ajouter un header/footer. Vous retrouverez ce genre de fonctionnement dans les starter tabs.
 
 ```html
-<ion-tabs class="tabs-striped tabs-background-positive tabs-color-light">
+<ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
   <!-- Tab Accueil -->
   <ion-tab title="Icysoft" icon-off="ion-ios-snowy" icon-on="ion-ios-snowy" href="#/icysoft/accueil">
     <ion-nav-view name="accueil"></ion-nav-view>
   </ion-tab>
 </ion-tabs>
 ```
-TODO - Différentes classes utilisées
+Classe CSS :
+- *tabs-striped* : Tabs de type "striped"
+- *tabs-top* : Permet de bloquer la liste d'icone en haut. Dans le cas contraire Ionic definit le positionnement selon l'OS.
+- *tabs-background-positive* : Couleur du fond de type "positive"
+- *tabs-color-light* : Couleur du texte (icones) de type "light"
 
 Le fichier accueil.html est le contenu de notre page, pour l'exemple j'ai pris un élément Ionic de type [Card Showcase](http://ionicframework.com/docs/components/#card-showcase) mais il est tout à fait possible de faire à votre guise.
 
 ```html
 <ion-view view-title="Icysoft">
-  <ion-content class="padding">
+  <ion-content>
   ...
   </ion-content>
 </ion-view>
@@ -191,7 +196,7 @@ angular.module('controller', [])
 
 Vous remarquerez que j'ai ajouté la mention 'use strict' elle n'est pas présente de base dans les fichiers des starter Ionic.
 
-#### III.b. Modifications
+##### Modifications
 
 Maintenant attaquons les modifications de app.js et index.js. D'une manière générale j'ai renommé les différents controllers/modules du starter blank pour que cela colle un peu mieux avec notre micro-projet.
 
@@ -203,7 +208,7 @@ Modifions le fichier index.html afin qu'il devienne plus générique et puisse a
 ...
 
 <body ng-app="icysoft">
-  <ion-nav-bar class="bar bar-header has-tabs-top bar-positive">
+  <ion-nav-bar class="bar-positive">
   </ion-nav-bar>
 
   <ion-nav-view></ion-nav-view>
@@ -211,10 +216,69 @@ Modifions le fichier index.html afin qu'il devienne plus générique et puisse a
 
 ```
 La balise *ion-nav-bar* servira comme son nom l'indique à afficher la bar de navigation contenant le titre en haut. Tandis que de son coté la balise *ion-nav-view* va nous permettre d'encapsuler du contenu.
-TODO - Différentes classes utilisées
 
-#### III.c. Tests Web
+Classe CSS :
+- *bar-positive* : Colorisation "positive" de la barre de titre en haut.
 
-#### III.d. Tests mobile (Android)
+Nos dernières modifications concernerons le fichier app.js qui est le coeur de notre application et contient le module Angular "icysoft".
+
+```js
+'use strict';
+
+angular.module('icysoft', ['ionic','controller'])
+
+...
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+  .state('base',
+  {
+    url:'/icysoft',
+    abstract: true,
+    templateUrl: 'tpl/base.html'
+  })
+  .state('base.icysoft',
+  {
+    url: '/accueil',
+    views: {
+      'accueil': {
+        templateUrl: 'tpl/accueil.html',
+        controller: 'AccueilCtrl'
+      }
+    }
+  });
+  $urlRouterProvider.otherwise('/icysoft/accueil');
+});
+```
+Ici nous avons rajouté un .config qui contient tout notre paramétrage de routage pour l'application. Rien de bien compliqué ici, on rajoute deux état : le premier, abstrait, sera notre template *base* qui contient nos tabs. Tandis que le second representera lui notre accueil. Pour finir on définit une route par défaut.
+
+#### III.b. Tests Web
+
+Maintenant que notre petite application est prête nous pouvons voir ce que ca donne.
+
+```
+ionic serve --lab
+```
+
+Et voici le résultat :
+
+<img src="./img/serv_2.png" width="700"/>
+
+Il est bien sur possible d'utiliser votre debuggueur de navigateur habituel pour vérifier le fonctionnement de votre application coté Web.
+
+#### III.c. Tests mobile (Android)
+
+Passons maintenant aux tests sur mobile. Comme je l'ai expliqué avant, il est nécessaire de voir le resultat de l'application dans des conditions réelles afin de s'assurer que tous nos développements sont fonctionnels. Pour cela il y a deux moyens d'arriver à nos faims, tester sur un émulateur (avec tous les inconvénients, principalement de performance, que ca peut impliquer) ou directement sur votre téléphone.
+
+Pour que le test fonctionne sur votre téléphone il est nécessaire que celui-ci soit en mode *USB debugging* et que les drivers adb soient installés sur votre machine. Vous trouverez des informations interressantes sur ce [lien](http://cordova.apache.org/docs/en/edge/guide_platforms_android_index.md.html#Android%20Platform%20Guide)
+
+```
+ionic run android
+```
+Dans le cas où votre téléphone n'est pas disponible, ionic/cordova tentera de lancer un émulateur Android pour éxecuter l'application
+
+<img src="./img/phone_1.png" width="300" style="float: right"/><img src="./img/phone_2.png" width="300"/>
+
+Il est également possible de debugguer votre application directement sur votre téléphone via plusieurs solution. Personnement je vous recommande chrome://inspect. Celui-ci permet d'utiliser le debuggueur Chrome directement dans votre téléphone, vous ne pourrez bientot plus vous en passer ^^. Pour paramétrer votre téléphone et votre Chrome je vous recommande de vous referer à cet [article Google](https://developer.chrome.com/devtools/docs/remote-debugging).
 
 ### IV. Préparons la publication (Android)
