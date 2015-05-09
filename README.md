@@ -215,12 +215,12 @@ Modifions le fichier index.html afin qu'il devienne plus générique et puisse a
 </body>
 
 ```
-La balise *ion-nav-bar* servira comme son nom l'indique à afficher la bar de navigation contenant le titre en haut. Tandis que de son coté la balise *ion-nav-view* va nous permettre d'encapsuler du contenu.
+La balise *ion-nav-bar* servira comme son nom l'indique à afficher la barre de navigation contenant le titre en haut. Tandis que de son coté la balise *ion-nav-view* va nous permettre d'encapsuler du contenu.
 
 Classe CSS :
 - *bar-positive* : Colorisation "positive" de la barre de titre en haut.
 
-Nos dernières modifications concernerons le fichier app.js qui est le coeur de notre application et contient le module Angular "icysoft".
+Nos dernières modifications concernent le fichier app.js qui est le coeur de notre application et contient le module Angular "icysoft".
 
 ```js
 'use strict';
@@ -250,7 +250,7 @@ angular.module('icysoft', ['ionic','controller'])
   $urlRouterProvider.otherwise('/icysoft/accueil');
 });
 ```
-Ici nous avons rajouté un .config qui contient tout notre paramétrage de routage pour l'application. Rien de bien compliqué ici, on rajoute deux état : le premier, abstrait, sera notre template *base* qui contient nos tabs. Tandis que le second representera lui notre accueil. Pour finir on définit une route par défaut.
+Ici nous avons rajouté un .config qui contient tout notre paramétrage de routage pour l'application. Rien de bien compliqué ici, on rajoute deux états : le premier, abstrait, sera notre template *base* qui contient nos tabs. Tandis que le second représentera lui, notre accueil. Pour finir on définit une route par défaut.
 
 #### III.b. Tests Web
 
@@ -264,21 +264,23 @@ Et voici le résultat :
 
 <img src="./img/serv_2.png" width="700"/>
 
-Il est bien sur possible d'utiliser votre debuggueur de navigateur habituel pour vérifier le fonctionnement de votre application coté Web.
+Il est possible d'utiliser votre debuggueur de navigateur habituel pour vérifier le fonctionnement de votre application comme pour n'importe quelle page web.
 
 #### III.c. Tests mobile (Android)
 
-Passons maintenant aux tests sur mobile. Comme je l'ai expliqué avant, il est nécessaire de voir le resultat de l'application dans des conditions réelles afin de s'assurer que tous nos développements sont fonctionnels. Pour cela il y a deux moyens d'arriver à nos faims, tester sur un émulateur (avec tous les inconvénients, principalement de performance, que ca peut impliquer) ou directement sur votre téléphone.
+Passons maintenant aux tests sur mobile. Comme je l'ai expliqué avant, il est nécessaire de voir le résultat de l'application dans des conditions réelles afin de s'assurer que tous nos développements sont fonctionnels. Pour cela il y a deux moyens d'arriver à nos faims : tester sur un émulateur (avec tous les inconvénients, principalement de performance, que cela peut impliquer) ou directement sur votre téléphone.
 
-Pour que le test fonctionne sur votre téléphone il est nécessaire que celui-ci soit en mode *USB debugging* et que les drivers adb soient installés sur votre machine. Vous trouverez des informations interressantes sur ce [lien](http://cordova.apache.org/docs/en/edge/guide_platforms_android_index.md.html#Android%20Platform%20Guide)
+Pour que le test fonctionne sur votre téléphone il est nécessaire que celui-ci soit en mode *USB debugging* et que les drivers adb soient installés sur votre machine. Vous trouverez des informations interressantes sur ce sujet [ici](http://cordova.apache.org/docs/en/edge/guide_platforms_android_index.md.html#Android%20Platform%20Guide)
 
 ```
 ionic run android
 ```
 Dans le cas où votre téléphone n'est pas disponible, ionic/cordova tentera de lancer un émulateur Android pour éxecuter l'application
 
-<img src="./img/phone_1.png" width="300" style="float: right"/><img src="./img/phone_2.png" width="300"/>
+<img src="./img/phone_1.png" width="300" style="float: right"/> <img src="./img/phone_2.png" width="300"/>
 
-Il est également possible de debugguer votre application directement sur votre téléphone via plusieurs solution. Personnement je vous recommande chrome://inspect. Celui-ci permet d'utiliser le debuggueur Chrome directement dans votre téléphone, vous ne pourrez bientot plus vous en passer ^^. Pour paramétrer votre téléphone et votre Chrome je vous recommande de vous referer à cet [article Google](https://developer.chrome.com/devtools/docs/remote-debugging).
+Il est également possible de debugguer votre application directement sur votre téléphone via plusieurs solutionz. Personnellement je vous recommande *chrome://inspect*. Celui-ci permet d'utiliser le debuggueur Chrome directement dans votre téléphone. Pour paramétrer votre téléphone et votre Chrome je vous conseille de vous référer à cet [article Google](https://developer.chrome.com/devtools/docs/remote-debugging).
 
 ### IV. Préparons la publication (Android)
+
+### IV. Concluons
