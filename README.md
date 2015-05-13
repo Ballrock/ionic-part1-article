@@ -8,6 +8,8 @@ Ce framework utilise également Angular pour la gestion des interactions dans l'
 
 Ionic embarque Cordova (Noyau open-source de PhoneGap géré par la fondation Apache) comme dépendance et lui apporte quelques sur-couches. Par exemple, "ionic serve" qui permet de visualiser son application directement dans son navigateur avec un rafraichissement automatique. Ceux qui ont déjà travaillé sur Cordova/Phonegap ne seront pas trop perdus.
 
+Il est à noter que ce guide est orienté vers la publication d'application Android. Certain élément, notamment l'installation et la publication peuvent différer sur iOS, Windows Phone et autre OS.
+
 ### II. Ok ! On demarre quand ?
 
 #### II.a. Les Installations
@@ -282,5 +284,39 @@ Dans le cas où votre téléphone n'est pas disponible, ionic/cordova tentera de
 Il est également possible de debugguer votre application directement sur votre téléphone via plusieurs solutionz. Personnellement je vous recommande *chrome://inspect*. Celui-ci permet d'utiliser le debuggueur Chrome directement dans votre téléphone. Pour paramétrer votre téléphone et votre Chrome je vous conseille de vous référer à cet [article Google](https://developer.chrome.com/devtools/docs/remote-debugging).
 
 ### IV. Préparons la publication (Android)
+
+Maintenant que nos tests sont concluant, nous allons pouvoir packager notre version pour la publier, pour cela nous allons tout d'abord realiser la compilation en mode release de notre application
+
+```
+ionic build --release android
+```
+
+Il est à noter que cette commande exécute en réalité *cordova build --release android*.
+Le build s'occupe de générer un package .APK non signé contenant tous les élément de notre application. Cet APK se trouve au chemin suivant *platforms/android/ant-build*. L'interieur du package est constitué de deux grands dossiers :
+- *res/* qui contient nos ressources hors application Cordova, notamment les icons et splashscreen. Quelques ressources necessaires au fonctionnement des plugins Cordova y sont également situées.
+- *assets/www* qui réprésente le contenu de notre dossier www avec les JS Cordova en plus
+
+Comme je l'ai dit juste au dessus l'APK actuel n'est pas signé, hors il est nécessaire pour la publication que celui-ci le soit. Pour cela nous allons générer un clé, celle-ci est à garder précieusement, sans elle il sera impossible de publier de futures mise à jour de notre application sur le Store.
+
+```
+keytool -genkey -v -keystore icysoft-release.keystore -alias icysoft -keyalg RSA -keysize 2048 -validity 10000
+```
+
+*keytool est compris dans les binaires de tous les JDK*.
+On utilise une clé 2048 bits pour une validité de 10000 jours (ca devrait suffire ^^).
+
+Avec cette clé nous allons signer notre jar comme pour keytool, jarsigner est compris dans les binaires de tous les JDK.
+
+```
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore icysoft-release.keystore CordovaApp-release-unsigned.apk icysoft
+```
+
+Pour finir nous allons utiliser un aligner pour optimiser et preparer l'archive pour le store. Pour cela nous allons utiliser zipalign qui est contenu dans les binaires du SDK Android
+
+```
+zipalign -v 4 CordovaApp-release-unsigned.apk Icysoft.apk
+```
+
+Et voila ! Nous avons notre APK prêt à etre mis sur le store pour faire des millions de download !
 
 ### IV. Concluons
