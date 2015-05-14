@@ -320,3 +320,6 @@ zipalign -v 4 CordovaApp-release-unsigned.apk Icysoft.apk
 Et voila ! Nous avons notre APK prêt à etre mis sur le store pour faire des millions de download !
 
 ### IV. Concluons
+
+Nous avons pu voir dans cet article les base de Cordova et de Ionic, il est bien sur possible d'aller beaucoup plus loin avec ces Frameworks mais nous pourrions en parler des heures ^^.
+Nous avons tout de même pu voir que l'on peut obtenir un résultat "natif-like" très rapidement avec Ionic, et c'est bien la tout le but ce framework, reduire au maximum le temps de developpement des applications multi-platformes.
