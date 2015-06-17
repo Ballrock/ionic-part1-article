@@ -10,7 +10,7 @@ Ionic embarque Cordova (Noyau open-source de PhoneGap géré par la fondation Ap
 
 Il est à noter que ce guide est orienté vers la publication d'application Android. Certain élément, notamment l'installation et la publication peuvent différer sur iOS, Windows Phone et autre OS.
 
-### II. Ok ! On demarre quand ?
+### II. Débuter les hostilités
 
 #### II.a. Les Installations
 ##### NodeJS
@@ -104,7 +104,7 @@ icysoft
 
 Notre projet est prêt pour les modifications à present
 
-### III. Commençons notre application
+### III. Réalisation de l'application
 
 **Note : Les source de cet article sont disponibles sur [GitHub]()**
 
@@ -283,7 +283,7 @@ Dans le cas où votre téléphone n'est pas disponible, ionic/cordova tentera de
 
 Il est également possible de debugguer votre application directement sur votre téléphone via plusieurs solutionz. Personnellement je vous recommande *chrome://inspect*. Celui-ci permet d'utiliser le debuggueur Chrome directement dans votre téléphone. Pour paramétrer votre téléphone et votre Chrome je vous conseille de vous référer à cet [article Google](https://developer.chrome.com/devtools/docs/remote-debugging).
 
-### IV. Préparons la publication (Android)
+### IV. Préparation à la publication (Android)
 
 Maintenant que nos tests sont concluant, nous allons pouvoir packager notre version pour la publier, pour cela nous allons tout d'abord realiser la compilation en mode release de notre application
 
@@ -319,7 +319,7 @@ zipalign -v 4 CordovaApp-release-unsigned.apk Icysoft.apk
 
 Et voila ! Nous avons notre APK prêt à etre mis sur le store pour faire des millions de download !
 
-### IV. Concluons
+### IV. Conclusion
 
 Nous avons pu voir dans cet article les base de Cordova et de Ionic, il est bien sur possible d'aller beaucoup plus loin avec ces Frameworks mais nous pourrions en parler des heures ^^.
 Nous avons tout de même pu voir que l'on peut obtenir un résultat "natif-like" très rapidement avec Ionic, et c'est bien la tout le but ce framework, reduire au maximum le temps de developpement des applications multi-platformes.
